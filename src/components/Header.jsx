@@ -5,7 +5,7 @@ import {
   faCableCar,
   faBed,
   faPeopleGroup,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"; //icon要注意
 
 const Header = () => {
   return (
