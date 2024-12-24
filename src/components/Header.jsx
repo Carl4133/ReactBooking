@@ -5,11 +5,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons"; //icon要注意
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
+import * as locales from "react-date-range/dist/locale"; //設定時區使用
 
-import * as locales from "react-date-range/dist/locale"; //?
+import format from "date-fns/format"; //日期顯示格式
 import "./header.scss";
 
 const Header = () => {
@@ -65,17 +67,21 @@ const Header = () => {
               className="SearchText"
               onClick={() => setOpenCalendar(!openCalendar)}
             >
-              08/19/2022-08/16/2022
+              {format(dates[0].startDate, "MM/dd/yyyy")} -{" "}
+              {format(dates[0].endDate, "MM/dd/yyyy")}
             </span>
             {openCalendar && (
               <DateRange
-                editableDateInputs={true}
+                editableDateInputs={true} //可以讓日期被選取並輸入等等
                 onChange={(item) => setDates([item.selection])}
+                //onChange把紀錄到的改動都紀錄到state date 裡面我們暫存器就會有選好的日期範圍，等於是輸入到暫存器
+                //item.selection的概念就是讓他選擇上傳到key=selection的部分
                 moveRangeOnFirstSelection={false}
-                className="calendar"
-                ranges={dates}
+                className="calendar" //並記得classname scss styling導入，才能搭配SCSS
+                ranges={dates} //才可以選範圍並範圍更改會re-render useState的date等於這是個抓取date範圍並顯示在日曆上，等於是從暫存器輸入到日曆顯示上面
                 minDate={new Date()}
                 locale={locales["zhTW"]}
+                //語言版本使用繁體中文zhTW概念
               />
             )}
           </div>
